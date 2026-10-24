@@ -2,7 +2,7 @@
 
 A surf conditions dashboard for the Gold Coast, Queensland, Australia.
 
-## Surf locations
+## Surf location / s
 
 - Greenmount / Rainbow Bay
 - Kirra
