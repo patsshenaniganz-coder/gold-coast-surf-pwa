@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gold Coast Surf Forecast</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 16px; }
+    h1 { text-align: center; color: #38bdf8; margin-bottom: 24px; }
+    .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 16px; border: 1px solid #334155; }
+    .spot-title { color: #f59e0b; font-size: 1.3rem; margin-top: 0; }
+    .report { line-height: 1.6; white-space: pre-line; color: #cbd5e1; }
+    .loading { text-align: center; color: #94a3b8; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+  <h1>🏄‍♂️ GC Surf Forecast</h1>
+  <div id="forecast-container" class="loading">Loading today's surf reports...</div>
+
+  <script>
+    async function loadSurfData() {
+      try {
+        const response = await fetch('./public/data.json');
+        const data = await response.json();
+        const container = document.getElementById('forecast-container');
+        container.innerHTML = '';
+
+        data.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <h2 class="spot-title">${item.name || 'Surf Spot'}</h2>
+            <div class="report">${item.gemini_report || item.result || JSON.stringify(item)}</div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        document.getElementById('forecast-container').innerText = 'No forecast data available yet today.';
+      }
+    }
+
+    loadSurfData();
+  </script>
+</body>
+</html>
